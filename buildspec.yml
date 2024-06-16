@@ -1,11 +1,12 @@
+---
 version: 0.2
-
 phases:
   install:
     runtime-versions:
-      java: corretto11
+      java: corretto17
     commands:
       - echo "Installing pre-build tools..."
+      - apt-get update && apt-get install -y maven
       - java -version
       - mvn -version
   pre_build:
@@ -15,13 +16,10 @@ phases:
       - echo "Compile complete."
   build:
     commands:
-      - echo "Running unit tests... This will take about 60 seconds."
-      - mvn test
-      - echo "Testing completed"
       - echo "Packaging the code..."
-      - mvn package
+      - mvn clean package
       - echo "Package complete."
-  artifacts:
-    files:
-      - target/*.jar
+cache:
+  paths:
+    - /root/.m2/repository/**/*
       
