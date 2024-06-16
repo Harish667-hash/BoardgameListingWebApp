@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - echo "Installing pre-build tools..."
+      - java -version
+      - mvn -version
+  pre_build:
+    commands:
+      - echo "Compiling the code..."
+      - mvn compile
+      - echo "Compile complete."
+  build:
+    commands:
+      - echo "Running unit tests... This will take about 60 seconds."
+      - mvn test
+      - echo "Testing completed"
+      - echo "Packaging the code..."
+      - mvn package
+      - echo "Package complete."
+  artifacts:
+    files:
+      - target/*.jar
+      
