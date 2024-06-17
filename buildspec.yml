@@ -19,6 +19,10 @@ phases:
       - echo "Packaging the code..."
       - mvn clean package
       - echo "Package complete."
+  artifacts:
+  files:
+    - '**/*'  # Include all files in the artifact
+  discard-paths: yes  # Optional: Remove local paths from artifacts
 cache:
   paths:
     - /root/.m2/repository/**/*
