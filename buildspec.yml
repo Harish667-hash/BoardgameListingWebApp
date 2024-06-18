@@ -24,8 +24,10 @@ phases:
       - docker login --username "harish552" --password-stdin <<< "Hsirah@1142"
         https://index.docker.io
   docker_build:
-    - echo Building Docker image...
-    - docker build -t harish552/javaapp_img:latest .
+    commands:
+      - echo Building Docker image...
+      - docker build -t harish552/javaapp_img:latest .
   docker_push:
-    - echo pushing docker image to docker hub
-    - docker push harish552/javaapp_img:latest
+    commands:
+      - echo pushing docker image to docker hub
+      - docker push harish552/javaapp_img:latest
