@@ -16,18 +16,14 @@ phases:
     commands:
       - echo Building the Java application...
       - mvn clean package
+      - echo "Generating build artifact..."
+      - cp target/*.jar build-artifacts/
+      - echo Building Docker image...
+      - docker build -t harish552/javaapp_img:latest .
   post_build:
     commands:
       - echo Running post-build steps...
-      - echo "Generating build artifact..."
-      - cp target/*.jar build-artifacts/
-      - docker login --username "" --password-stdin <<< ""
-        https://index.docker.io
-  docker_build:
-    commands:
-      - echo Building Docker image...
-      - docker build -t harish552/javaapp_img:latest .
-  docker_push:
-    commands:
+      - docker login --username "harish552" --password-stdin <<< "Hsirah@1142"
+        https://docker.io
       - echo pushing docker image to docker hub
       - docker push harish552/javaapp_img:latest
