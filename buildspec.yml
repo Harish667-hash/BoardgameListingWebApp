@@ -29,10 +29,10 @@ phases:
       - mkdir -p build-artifacts
       - cp target/*.jar build-artifacts/
       - echo Building Docker image...
-      - docker build -t harish552/javaapp_img:latest .
+      - docker build -t uname/javaapp_img:latest .
   post_build:
     commands:
       - echo Running post-build steps...
-      - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
+      - echo "" | docker login --username "" --password-stdin
       - echo pushing docker image to docker hub
-      - docker push harish552/javaapp_img:latest
+      - docker push uname/javaapp_img:latest
