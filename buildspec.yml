@@ -26,6 +26,7 @@ phases:
       - echo Building the Java application...
       - mvn clean package
       - echo "Generating build artifact..."
+      - mkdir -p build-artifacts
       - cp target/*.jar build-artifacts/
       - echo Building Docker image...
       - docker build -t harish552/javaapp_img:latest .
