@@ -5,25 +5,27 @@ phases:
     runtime-versions:
       java: corretto17
     commands:
-      - echo "Installing pre-build tools..."
-      - apt-get update && apt-get install -y maven
-      - java -version
-      - mvn -version
+      - echo Installing Maven and Docker Engine...
+      - apt-get update && apt-get install -y maven docker docker-cli
   pre_build:
     commands:
-      - echo "Compiling the code..."
-      - mvn compile
-      - echo "Compile complete."
+      - echo Preparing for build...
+      - java -version
+      - mvn -version
   build:
     commands:
-      - echo "Packaging the code..."
+      - echo Building the Java application...
       - mvn clean package
-      - echo "Package complete."
-  artifacts:
-  files:
-    - '**/*'  # Include all files in the artifact
-  discard-paths: yes  # Optional: Remove local paths from artifacts
-cache:
-  paths:
-    - /root/.m2/repository/**/*
-      
+  post_build:
+    commands:
+      - echo Running post-build steps...
+      - echo "Generating build artifact..."
+      - cp target/*.jar build-artifacts/
+      - docker login --username "harish552" --password-stdin <<< "Hsirah@1142"
+        https://index.docker.io
+  docker_build:
+    - echo Building Docker image...
+    - docker build -t harish552/javaapp_img:latest .
+  docker_push:
+    - echo pushing docker image to docker hub
+    - docker push harish552/javaapp_img:latest
