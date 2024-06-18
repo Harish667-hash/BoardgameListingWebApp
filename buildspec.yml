@@ -21,7 +21,7 @@ phases:
       - echo Running post-build steps...
       - echo "Generating build artifact..."
       - cp target/*.jar build-artifacts/
-      - docker login --username "harish552" --password-stdin <<< "Hsirah@1142"
+      - docker login --username "" --password-stdin <<< ""
         https://index.docker.io
   docker_build:
     commands:
