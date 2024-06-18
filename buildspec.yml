@@ -34,6 +34,6 @@ phases:
     commands:
       - echo Running post-build steps...
       - docker login --username "harish552" --password-stdin <<< "Hsirah@1142"
-        https://docker.io
+       
       - echo pushing docker image to docker hub
       - docker push harish552/javaapp_img:latest
