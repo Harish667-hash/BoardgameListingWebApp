@@ -43,4 +43,10 @@ post_build:
     - echo "Logging in to Docker Hub with username: $DOCKER_USERNAME"
     - echo "$DOCKER_PASSWD" | docker login --username "$DOCKER_USERNAME" --password-stdin
     - echo "Pushing Docker image $REPOSITORY_URL:latest"
+    - docker push $REPOSITORY_URL:latest > docker_push.log 2>&1
+    - echo "pushing completed"
+    - cat docker_push.log
+    - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+    - if [ $? -ne 0 ]; then echo "Docker login failed"; exit 1; fi
     - docker push $REPOSITORY_URL:latest
+    - if [ $? -ne 0 ]; then echo "Docker push failed"; exit 1; fi
