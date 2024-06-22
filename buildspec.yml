@@ -39,6 +39,7 @@ phases:
       - docker build -t $REPOSITORY_URL:latest .
 post_build:
   commands:
+    - set -x
     - echo Running post-build steps...
     - echo "Logging in to Docker Hub with username: $DOCKER_USERNAME"
     - echo "$DOCKER_PASSWD" | docker login --username "$DOCKER_USERNAME" --password-stdin
