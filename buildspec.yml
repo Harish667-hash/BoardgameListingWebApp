@@ -23,9 +23,8 @@ phases:
       - echo Preparing for build...
       - java -version
       - mvn -version
-      - TAG="latest"
       - echo "Update Image tag in kubernetes manifest"
-      - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@'
+      - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:latest"'@'
         deployment.yml
       - echo "Checking AWS CLI Version..."
       - aws --version
@@ -37,7 +36,7 @@ phases:
       - mkdir -p build-artifacts
       - cp target/*.jar build-artifacts/
       - echo Building Docker image...
-      - docker build -t $REPOSITORY_URL:$TAG .
+      - docker build -t $REPOSITORY_URL:latest .
   post_build:
     commands:
       - echo Running post-build steps...
@@ -46,4 +45,4 @@ phases:
         --query 'Parameters[*].{Value:Value}' --output text > docker_creds.txt
       - read -r username password <<< $(cat docker_creds.txt)
       - echo "$password" | docker login --username "$username" --password-stdin
-      - docker push $REPOSITORY_URL:$TAG
+      - docker push $REPOSITORY_URL:latest
