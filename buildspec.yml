@@ -38,7 +38,7 @@ phases:
       - mkdir -p build-artifacts
       - cp target/*.jar build-artifacts/
       - echo Building Docker image...
-      - echo Generated TAG: $TAG
+      
       - docker build -t $REPOSITORY_URL:$TAG .
   post_build:
     commands:
