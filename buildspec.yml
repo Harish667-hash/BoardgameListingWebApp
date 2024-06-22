@@ -23,8 +23,7 @@ phases:
       - echo Preparing for build...
       - java -version
       - mvn -version
-      - TAG="$(date +%Y-%m-%d.%H.%M.%S).$(echo
-        $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
+      - TAG="(echo -n $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 4)"
       - echo "Update Image tag in kubernetes manifest"
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@'
         deployment.yml
@@ -38,7 +37,6 @@ phases:
       - mkdir -p build-artifacts
       - cp target/*.jar build-artifacts/
       - echo Building Docker image...
-      
       - docker build -t $REPOSITORY_URL:$TAG .
   post_build:
     commands:
