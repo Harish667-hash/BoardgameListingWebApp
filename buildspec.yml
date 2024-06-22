@@ -40,9 +40,7 @@ phases:
 post_build:
   commands:
     - echo Running post-build steps...
-    - aws ssm get-parameters --names "/myapp/docker-credentials/username" "/myapp/docker-credentials/passwd" --with-decryption --region us-east-1 --query 'Parameters[*].{Value:Value}' --output text > docker_creds.txt
-    - read -r username password <<< $(cat docker_creds.txt)
-    - echo "Logging in to Docker Hub with username: $username"
-    - echo "$password" | docker login --username "$username" --password-stdin
+    - echo "Logging in to Docker Hub with username: $DOCKER_USERNAME"
+    - echo "$DOCKER_PASSWD" | docker login --username "$DOCKER_USERNAME" --password-stdin
     - echo "Pushing Docker image $REPOSITORY_URL:latest"
     - docker push $REPOSITORY_URL:latest
