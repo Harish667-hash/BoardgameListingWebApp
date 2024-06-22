@@ -23,7 +23,7 @@ phases:
       - echo Preparing for build...
       - java -version
       - mvn -version
-      - TAG="(echo -n $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 4)"
+      - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 4 | tr -d '\n')"
       - echo "Update Image tag in kubernetes manifest"
       - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@'
         deployment.yml
