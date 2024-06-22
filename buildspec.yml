@@ -43,8 +43,7 @@ phases:
       - echo Running post-build steps...
       - aws ssm get-parameters --names "/myapp/docker-credentials/username"
         "/myapp/docker-credentials/passwd" --with-decryption --region us-east-1
-        --query 'Parameters[*].{Value:Value}' --        output text >
-        docker_creds.txt
+        --query 'Parameters[*].{Value:Value}' --output text > docker_creds.txt
       - read -r username password <<< $(cat docker_creds.txt)
       - echo "$password" | docker login --username "$username" --password-stdin
       - docker push $REPOSITORY_URL:$TAG
