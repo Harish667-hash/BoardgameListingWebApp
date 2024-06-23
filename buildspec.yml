@@ -33,16 +33,12 @@ phases:
       - mkdir -p build-artifacts
       - cp target/*.jar build-artifacts/
       - echo Building Docker image...
-      - docker build -t $REPOSITORY_URL:latest .
+      - docker build -t harish552/javaapp:latest .
   post_build:
     commands:
       - set -x
       - echo Running post-build steps...
       - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
-      - docker push $REPOSITORY_URL:latest > docker_push.log 2>&1
-      - push_result=$?
-      - echo "Push result: $push_result"
-      - cat docker_push.log
-      - if [ $push_result -ne 0 ]; then echo "Docker push failed"; exit 1; fi
+      - docker push harish552/javaapp:latest 
       - echo "Pushing completed successfully"
