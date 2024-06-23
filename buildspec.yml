@@ -38,12 +38,8 @@ phases:
     commands:
       - set -x
       - echo Running post-build steps...
-      - DOCKER_USERNAME=$(aws ssm get-parameter --name /myapp/java/practice/dockeruname --with-decryption | jq -r '.Parameter.Value')
-      - DOCKER_PASSWORD=$(aws ssm get-parameter --name /myapp/java/practice/dockerpassword --with-decryption | jq -r '.Parameter.Value')
-      - echo "Pushing Docker image $REPOSITORY_URL:latest"
-      - export DOCKER_USERNAME=$DOCKER_USERNAME
-      - export DOCKER_PASSWORD=$DOCKER_PASSWORD
-      - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - docker login --username harish552 --password Hsirah@1142
+      - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
       - docker push $REPOSITORY_URL:latest > docker_push.log 2>&1
       - echo "pushing completed"
