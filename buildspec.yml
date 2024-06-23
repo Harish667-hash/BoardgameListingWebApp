@@ -41,8 +41,8 @@ phases:
       - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
       - docker push $REPOSITORY_URL:latest > docker_push.log 2>&1
-      - echo "pushing completed"
+      - push_result=$?
+      - echo "Push result: $push_result"
       - cat docker_push.log
-      - if [ $? -ne 0 ]; then echo "Docker login failed"; exit 1; fi
-      - docker push $REPOSITORY_URL:latest
-      - if [ $? -ne 0 ]; then echo "Docker push failed"; exit 1; fi
+      - if [ $push_result -ne 0 ]; then echo "Docker push failed"; exit 1; fi
+      - echo "Pushing completed successfully"
