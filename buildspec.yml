@@ -38,7 +38,6 @@ phases:
     commands:
       - set -x
       - echo Running post-build steps...
-      - docker login --username harish552 --password Hsirah@1142
       - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
       - docker push $REPOSITORY_URL:latest > docker_push.log 2>&1
