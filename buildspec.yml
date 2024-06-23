@@ -38,7 +38,6 @@ phases:
     commands:
       - set -x
       - echo Running post-build steps...
-      - echo "Logging in to Docker Hub with username: $DOCKER_USERNAME"
       - echo "$DOCKER_PASSWD" | docker login --username "$DOCKER_USERNAME" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
       - docker push $REPOSITORY_URL:latest > docker_push.log 2>&1
