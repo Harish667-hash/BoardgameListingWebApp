@@ -50,7 +50,7 @@ phases:
       - echo Running post-build steps...
       - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
-      - docker push harish552/javaapp:latest 
+     # - docker push harish552/javaapp:latest 
       - echo "Pushing completed successfully"
       # Get AWS Credential using STS Assume Role for kubectl
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"          
