@@ -48,7 +48,7 @@ phases:
     commands:
       - set -x
       - echo Running post-build steps...
-      - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
+      - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
      # - docker push harish552/javaapp:latest 
       - echo "Pushing completed successfully"
