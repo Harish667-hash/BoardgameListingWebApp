@@ -50,9 +50,9 @@ post_build:
     - echo "Running post-build steps..."
     
     # Docker login and image push
-    - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+   # - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
     # - echo "Pushing Docker image $REPOSITORY_URL:latest"
-    - docker push harish645/javaapp:latest 
+    #- docker push harish645/javaapp:latest 
     # - echo "Pushing completed successfully"
     
    # Get AWS credentials using STS Assume Role for kubectl
