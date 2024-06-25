@@ -55,22 +55,22 @@ post_build:
     - docker push harish552/javaapp:latest 
     # - echo "Pushing completed successfully"
     
-    # Get AWS credentials using STS Assume Role for kubectl
-    # - echo "Setting environment variables related to AWS CLI for kubeconfig setup"          
-    # - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_ROLE_ARN --role-session-name eks-codebuild --duration-seconds 900)
-    # - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
-    # - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
-    # - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
-    # - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
+   # Get AWS credentials using STS Assume Role for kubectl
+    - echo "Setting environment variables related to AWS CLI for kubeconfig setup"          
+    - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_ROLE_ARN --role-session-name eks-codebuild --duration-seconds 900)
+    - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
+    - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
+    - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
+    - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
     
     # Update kubectl with your EKS cluster              
-    # - echo "Updating kubeconfig configuration"      
-    # - aws eks update-kubeconfig --name $EKS_CLUSTERNAME
+    - echo "Updating kubeconfig configuration"      
+    - aws eks update-kubeconfig --name $EKS_CLUSTERNAME
     
     # Apply manifest changes using kubectl
-    # - echo "Applying changes to Kubernetes manifests"            
-    # - kubectl apply -f deployment.yml
-    # - echo "All done! Kubernetes changes applied successfully"   
+    - echo "Applying changes to Kubernetes manifests"            
+    - kubectl apply -f deployment.yml
+    - echo "All done! Kubernetes changes applied successfully" 
       
      
    
