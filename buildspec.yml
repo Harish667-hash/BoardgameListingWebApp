@@ -14,12 +14,18 @@ phases:
       - apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
       - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
       - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-      - apt-get update
+      - apt-get update 
+      - apt-get install -y curl unzip jq
       - apt-get install -y docker-ce docker-ce-cli containerd.io
       - curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.11/2023-03-17/bin/linux/amd64/kubectl
       - chmod +x ./kubectl
       - sudo cp ./kubectl /usr/local/bin
       - export PATH=/usr/local/bin:$PATH
+       # Install AWS CLI
+      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      - unzip awscliv2.zip
+      - sudo ./aws/install
+      - aws --version
   pre_build:
     commands:
       - echo Preparing for build...
@@ -42,7 +48,7 @@ phases:
     commands:
       - set -x
       - echo Running post-build steps...
-      - echo "" | docker login --username "" --password-stdin
+      - echo "Hsirah@1142" | docker login --username "harish552" --password-stdin
       - echo "Pushing Docker image $REPOSITORY_URL:latest"
       - docker push harish552/javaapp:latest 
       - echo "Pushing completed successfully"
