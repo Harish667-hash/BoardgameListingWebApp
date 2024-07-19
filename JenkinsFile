@@ -1,0 +1,52 @@
+pipeline{
+    agent any
+
+    tools{
+        java 'Java17'
+        maven 'Maven3'
+    }
+    environment{
+        APP_NAME = 'creating pipeline'
+        RELEASE = '1.0.0'
+        DOCKER_USER = ''
+        DOCKER_PASSWD = 'dockerpass'
+        IMAGE_NAME = '$(DOCKER_USER)'+ "/" +'$(APP_NAME)'
+        IMAGE_TAG = '$(RELEASE)-$(BUILD_NUMBER)'
+    }
+
+    stages{
+        stage("cleanup Workspace"){
+            step{
+                cleanWs()
+            }
+
+        }
+        stage("git checkout"){
+            step{
+                git branch: 'master', credentialId: 'github', url: 'https://github.com/Harish667-hash/BoardgameListingWebApp.git'
+            }
+
+        }
+        stage("Build"){
+            step{
+               sh 'mvn clean package'
+            }
+
+        }
+        stage("Build & push docker Image"){
+            step{
+               script{
+                docker.withRegistry('',DOCKER_PASSWD) {
+                    docker_image = docker.build "${IMAGE_NAME}"
+                    }
+                    docker.withRegistry('',DOCKER_PASSWD) {
+                        docker_image.push("${IMAGE_TAG}")
+                        
+                    }
+
+               }
+            }
+
+        }
+    }
+}
