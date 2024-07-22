@@ -10,7 +10,7 @@ pipeline{
     environment{
         APP_NAME = 'creating pipeline'
         RELEASE = '1.0.0'
-        DOCKER_USER = 'harish552'
+        DOCKER_USER = 'harish645'
         DOCKER_PASSWD = 'dockerpass'
         IMAGE_NAME = '$(DOCKER_USER)'+ "/" +'$(APP_NAME)'
         IMAGE_TAG = '$(RELEASE)-$(BUILD_NUMBER)'
@@ -18,25 +18,25 @@ pipeline{
 
     stages{
         stage("cleanup Workspace"){
-            step{
+            steps {
                 cleanWs()
             }
 
         }
         stage("git checkout"){
-            step{
+            steps {
                 git branch: 'master', credentialId: 'github', url: 'https://github.com/Harish667-hash/BoardgameListingWebApp.git'
             }
 
         }
         stage("Build"){
-            step{
+            steps {
                sh 'mvn clean package'
             }
 
         }
         stage("Build & push docker Image"){
-            step{
+            steps {
                script{
                 docker.withRegistry('',DOCKER_PASSWD) {
                     docker_image = docker.build "${IMAGE_NAME}"
