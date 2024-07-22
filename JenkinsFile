@@ -11,13 +11,20 @@ pipeline {
     environment {
         APP_NAME = 'creating-pipeline'
         RELEASE = '1.0.0'
-        DOCKER_USER = 'harish645'
-        DOCKER_PASSWD = 'dockerpass'
-        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+       
     }
 
     stages {
+           stage("Setup Environment") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWD')]) {
+                        env.IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
+                        env.IMAGE_TAG = "${RELEASE}-${env.BUILD_NUMBER}"
+                    }
+                }
+            }
+        }
         stage("Cleanup Workspace") {
             steps {
                 cleanWs()
