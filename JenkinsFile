@@ -11,20 +11,11 @@ pipeline {
     environment {
         APP_NAME = 'creating-pipeline'
         RELEASE = '1.0.0'
+        IMAGE_NAME = 'javatestimage'
        
     }
 
     stages {
-           stage("Setup Environment") {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWD')]) {
-                        env.IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
-                        env.IMAGE_TAG = "${RELEASE}-${env.BUILD_NUMBER}"
-                    }
-                }
-            }
-        }
         stage("Cleanup Workspace") {
             steps {
                 cleanWs()
@@ -33,7 +24,7 @@ pipeline {
         
         stage("Git Checkout") {
             steps {
-                git branch: 'master', credentialsId: 'github', url: 'https://github.com/Harish667-hash/BoardgameListingWebApp.git'
+                git branch: 'master', url: 'https://github.com/Harish667-hash/BoardgameListingWebApp.git'
             }
         }
         
@@ -42,16 +33,15 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        
         stage("Build & Push Docker Image") {
             steps {
                 script {
-                    docker.withRegistry('', "${DOCKER_USER}:${DOCKER_PASSWD}") {
+                    // Use the Docker Hub URL and the credentials ID stored in Jenkins
+                    docker.withRegistry('https://hub.docker.com/', 'docker-credentials-id') {
                         def dockerImage = docker.build("${IMAGE_NAME}")
-                        dockerImage.push("${IMAGE_TAG}")
+                        dockerImage.push("${BUILD_NUMBER}")
                     }
                 }
             }
-        }
     }
 }
