@@ -36,8 +36,13 @@ pipeline {
                 script {
                     // Use the Docker Hub URL and the credentials ID stored in Jenkins
                     docker.withRegistry('https://index.docker.io/', 'docker-credentials-id') {
-                        def dockerImage = docker.build("${IMAGE_NAME}")
-                        dockerImage.push("${BUILD_NUMBER}")
+                        // Tag the Docker image with the Docker Hub username
+                        sh "docker tag ${IMAGE_NAME} harish645/${IMAGE_NAME}:${BUILD_NUMBER}"
+                        
+                        // Push the Docker image
+                        sh "docker push harish645/${IMAGE_NAME}:${BUILD_NUMBER}"
+                        sh 'docker info'
+
                     }
                 }
             }
