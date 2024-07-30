@@ -34,28 +34,13 @@ pipeline {
         stage("Build & Push Docker Image") {
             steps {
                 script {
+                    // Use the Docker Hub URL and the credentials ID stored in Jenkins
                     docker.withRegistry('https://index.docker.io/', 'docker-credentials-id') {
                         def dockerImage = docker.build("${IMAGE_NAME}")
-                        def imageRepo = "${IMAGE_NAME}:${BUILD_NUMBER}"
-                        def dockerHubUsername = 'harish645' // Replace with your username
-                        def fullImageRepo = "${dockerHubUsername}/${imageRepo}"
-        
-                    // Check if the repository exists, if not create it
-                        def repoExists = sh(returnStatus: true, script: "curl -s -f -o /dev/null https://hub.docker.com/repositories/${dockerHubUsername}/${IMAGE_NAME}")
-                            if (repoExists != 0) {
-                            sh "curl -X POST https://hub.docker.com/repositories/${dockerHubUsername}/${IMAGE_NAME}/"
-                        }
-        
-                        dockerImage.push(fullImageRepo)
+                        dockerImage.push("${BUILD_NUMBER}")
                     }
                 }
             }
         }
-
-
-
-
-
-
     }
 }
