@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Use the Docker Hub URL and the credentials ID stored in Jenkins
-                    docker.withRegistry('https://hub.docker.com/', 'docker-credentials-id') {
+                    docker.withRegistry('https://index.docker.io/', 'docker-credentials-id') {
                         def dockerImage = docker.build("${IMAGE_NAME}")
                         dockerImage.push("${BUILD_NUMBER}")
                     }
