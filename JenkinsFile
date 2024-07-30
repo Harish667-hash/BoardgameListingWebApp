@@ -9,7 +9,7 @@ pipeline {
     environment {
         APP_NAME = 'creating-pipeline'
         RELEASE = '1.0.0'
-        IMAGE_NAME = 'javatestimage'
+        IMAGE_NAME = 'demoimage'
        
     }
 
