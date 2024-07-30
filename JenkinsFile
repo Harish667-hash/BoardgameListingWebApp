@@ -10,6 +10,7 @@ pipeline {
         APP_NAME = 'creating-pipeline'
         RELEASE = '1.0.0'
         IMAGE_NAME = 'firstpipeline'
+        BUILD_NUMBER = 'demo123'
        
     }
 
@@ -42,7 +43,7 @@ pipeline {
                         sh "docker tag ${IMAGE_NAME} harish552/${IMAGE_NAME}:${BUILD_NUMBER}"
                         
                         // Push the Docker image
-                        sh "docker push harish552/${IMAGE_NAME}:${BUILD_NUMBER}"
+                        sh "docker -D push harish552/${IMAGE_NAME}:${BUILD_NUMBER}"
                         sh 'docker info'
 
                     }
