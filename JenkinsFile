@@ -12,7 +12,7 @@ pipeline {
     }
 
     stages {
-        /*
+        
         stage('Prepare') {
             steps {
                 script {
@@ -46,7 +46,7 @@ pipeline {
                  git branch: 'master', url: 'https://github.com/Harish667-hash/BoardgameListingWebApp.git'
             }
         }
-
+        /*
         stage("Build") {
             steps {
                 sh 'mvn clean package'
