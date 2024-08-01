@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        GIT_CLI_VERBOSE = 'true'
+        
         IMAGE_TAG = "${env.BUILD_ID}"
     }
 
@@ -15,6 +15,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
+                    GIT_CLI_VERBOSE = 'true'
                     // Retrieve credentials and secrets
                     env.AWS_ACCOUNT_ID = credentials('aws-account-id')
                     env.ECR_REPO_NAME = credentials('ecr-repo-name')
@@ -28,7 +29,7 @@ pipeline {
                 script {
                     sh '''
                     aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-                    
+
                     '''
                 }
 
