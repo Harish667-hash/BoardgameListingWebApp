@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         AWS_ACCOUNT_ID = credentials('aws-account-id')
-        ECR_REPO_NAME = credentials('ecr-repo-name')
+        ECR_REPO_NAME = '961134435444.dkr.ecr.us-east-1.amazonaws.com/my-repo'
         AWS_REGION = credentials('aws-region')
         IMAGE_TAG = "${env.BUILD_ID}"
     }
