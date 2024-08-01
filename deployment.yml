@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: game
-        image: CONTAINER_IMAGE
+        image: 961134435444.dkr.ecr.us-east-1.amazonaws.com/my-repo:IMAGE_TAG
         ports:
-        - containerPort: 8080
+        - containerPort: 8082
