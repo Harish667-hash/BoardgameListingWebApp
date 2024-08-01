@@ -7,7 +7,9 @@ pipeline {
     }
 
     environment {
-        
+        AWS_ACCOUNT_ID = credentials('aws-account-id')
+        ECR_REPO_NAME = credentials('ecr-repo-name')
+        AWS_REGION = credentials('aws-region')
         IMAGE_TAG = "${env.BUILD_ID}"
     }
 
@@ -16,10 +18,8 @@ pipeline {
             steps {
                 script {
                     GIT_CLI_VERBOSE = 'true'
-                    // Retrieve credentials and secrets
-                    env.AWS_ACCOUNT_ID = credentials('aws-account-id')
-                    env.ECR_REPO_NAME = credentials('ecr-repo-name')
-                    env.AWS_REGION = credentials('aws-region')
+                    echo 'preparing'
+                    
                 }
             }
         }
