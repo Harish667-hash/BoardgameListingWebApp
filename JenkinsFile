@@ -11,6 +11,7 @@ pipeline {
         ECR_REPO_NAME = 'my-repo'
         AWS_REGION = credentials('aws-region')
         IMAGE_TAG = "${env.BUILD_ID}"
+        CLUSTER_NAME = 'mycluster'
     }
 
     stages {
@@ -70,6 +71,26 @@ pipeline {
                     docker.withRegistry("https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com") {
                         dockerImage.push("${IMAGE_TAG}")
                     }
+                }
+            }
+        }
+
+         stage('Deploy to EKS') {
+            steps {
+                withAWS(region: "${AWS_REGION}", credentials: 'aws-credentials-id') {
+                    sh 'aws eks update-kubeconfig --name ${CLUSTER_NAME}'
+                }
+                script {
+                    sh 'kubectl apply -f deployment.yaml'
+                }
+            }
+        }
+
+         stage('Verify Deployment') {
+            steps {
+                script {
+                    sh 'kubectl rollout status deployment/${DEPLOYMENT_NAME}'
+                    sh 'kubectl get pods'
                 }
             }
         }
