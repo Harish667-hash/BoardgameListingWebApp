@@ -75,6 +75,12 @@ pipeline {
             }
         }
 
+         stage('List Files') {
+            steps {
+                sh 'ls -l'
+            }
+        }
+
          stage('Deploy to EKS') {
             steps {
                 withAWS(region: "${AWS_REGION}", credentials: 'aws-credentials-id') {
