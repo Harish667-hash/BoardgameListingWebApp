@@ -87,7 +87,8 @@ pipeline {
                     sh 'aws eks update-kubeconfig --name ${CLUSTER_NAME}'
                 }
                 script {
-                    sh 'kubectl apply -f deployment.yml --validate=false '
+                    sh 'kubectl apply -f deployment.yml --validate=false .
+                
                 }
             }
         }
